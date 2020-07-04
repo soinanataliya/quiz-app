@@ -1,0 +1,12 @@
+.answer {
+  margin: 14px 40px;
+  padding: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0.7;
+  transition: opacity 0.5s;
+  &:hover {
+    opacity: 1;
+  }
+}
