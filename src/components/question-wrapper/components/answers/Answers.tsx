@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { FC, memo } from 'react';
 import { Answer } from './components/answer';
 import s from './index.module.scss';
 
@@ -17,12 +17,15 @@ const MOCK_DATA = [
   }
 ];
 
-export const Answers = memo(
- () => {
+const Answers: FC =
+  () => {
     return (
       <div className={s.answers}>
-       { MOCK_DATA.map(item => <Answer data={item} />)}
+        {
+          MOCK_DATA.map(item => <Answer key={item.id} data={item} />)
+        }
       </div>
     );
-  },
-);
+  };
+
+export default memo(Answers);
