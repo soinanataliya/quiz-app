@@ -1,13 +1,26 @@
 import React, { FC, memo } from "react";
-import s from "./index.module.scss";
+import style from "./index.module.scss";
+import classnames from 'classnames';
+
+const cn = classnames.bind(style);
 
 type PropsType = {
   text: string;
+  disabled?: boolean;
+  onClick?: () => void;
 };
 
-const Button: FC<PropsType> = ({ text }) => {
+const Button: FC<PropsType> = ({ text, disabled, onClick }) => {
   return (
-    <button className={s.button}>{text}</button>
+    <button
+      className={cn(style.button,
+        { [style.buttonDisabled]: disabled }
+      )}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   );
 };
 

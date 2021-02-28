@@ -1,8 +1,6 @@
 export interface IRootReducer {
-  data: {
     currentQuestion: number;
     questions: Array<IQuestions>;
-  };
 };
 
 export interface ActionType {
@@ -10,12 +8,12 @@ export interface ActionType {
   payload?: any;
 }
 
-interface IQuestions {
+export interface IQuestions {
   questionText: string,
   answers: Array<IAnswer>;
 };
 
 export interface IAnswer {
   id: number,
-  text: string;
+  text: string | null;
 }

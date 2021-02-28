@@ -1,8 +1,7 @@
-import { IS_DATA_LOADING } from './actions';
+import { IS_DATA_LOADING, SET_CURRENT_QUESTION } from './actions';
 import { IRootReducer, ActionType } from './types';
 
 export const initialState: IRootReducer = {
-  data: {
     currentQuestion: 0,
     questions: [
       {
@@ -40,13 +39,12 @@ export const initialState: IRootReducer = {
               text: 'Тургенев'
             },
             {
-              id: 3,
+              id: 4,
               text: 'Некрасов'
             }
           ]
       }
     ]
-  },
 };
 
 const reducer = (
@@ -56,7 +54,8 @@ const reducer = (
   switch (type) {
     case IS_DATA_LOADING:
       return { ...state, isLoading: payload };
-
+    case SET_CURRENT_QUESTION:
+      return { ...state, currentQuestion: payload };
     default:
       return state;
   }

@@ -1,28 +1,28 @@
 import React, { FC, memo } from 'react';
+import { IAnswer } from '../../../../redux';
 import { Answer } from './components/answer';
 import s from './index.module.scss';
 
-const MOCK_DATA = [
-  {
-    id: 1,
-    text: 'Быть'
-  },
-  {
-    id: 2,
-    text: 'Не быть'
-  },
-  {
-    id: 3,
-    text: 'Вот в чем вопрос'
-  }
-];
+interface IProps {
+  answers: Array<IAnswer>;
+  chosenAnswer: IAnswer;
+  chooseAnswer: (item: IAnswer) => void;
+}
 
-const Answers: FC =
-  () => {
+const Answers: FC<IProps> =
+  ({ answers = [], chosenAnswer, chooseAnswer }) => {
+
     return (
       <div className={s.answers}>
         {
-          MOCK_DATA.map(item => <Answer key={item.id} data={item} />)
+          answers.map(item =>
+            <Answer
+              key={item.id}
+              data={item}
+              chooseAnswer={chooseAnswer}
+              chosen={item.id === chosenAnswer.id}
+            />
+          )
         }
       </div>
     );

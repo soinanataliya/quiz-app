@@ -11,3 +11,11 @@
     background: rgb(110, 55, 158);
   }
 }
+.buttonDisabled {
+  background: rgb(216, 203, 213);
+  cursor: auto;
+  outline: none; 
+  &:hover {
+    background: rgb(216, 203, 213);
+  }
+}
