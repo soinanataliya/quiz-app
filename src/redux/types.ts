@@ -1,6 +1,8 @@
 export interface IRootReducer {
     currentQuestion: number;
     questions: Array<IQuestions>;
+    isError: boolean;
+    isDataLoading: boolean;
 };
 
 export interface ActionType {

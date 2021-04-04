@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { AnyAction, applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../redux/index';
 import { initialState } from '../redux/reducer';
@@ -17,3 +17,11 @@ export const store = createStore(
   initialState,
   enhancer,
 );
+
+export const dispatch = (command: AnyAction) => {
+  if (!store) {
+    throw Error('Store is not initialized');
+  }
+
+  store.dispatch(command);
+}

@@ -1,50 +1,16 @@
-import { IS_DATA_LOADING, SET_CURRENT_QUESTION } from './actions';
+import {
+  IS_DATA_LOADING,
+  SET_CURRENT_QUESTION,
+  SET_QUESTIONS,
+  SET_ERROR,
+} from './actions';
 import { IRootReducer, ActionType } from './types';
 
 export const initialState: IRootReducer = {
-    currentQuestion: 0,
-    questions: [
-      {
-        questionText: 'Быть или не быть?',
-        answers:
-          [
-            {
-              id: 1,
-              text: 'Быть'
-            },
-            {
-              id: 2,
-              text: 'Не быть'
-            },
-            {
-              id: 3,
-              text: 'Вот в чем вопрос'
-            }
-          ]
-      },
-      {
-        questionText: 'Кто автор строк "Белеет парус одинокий...?',
-        answers:
-          [
-            {
-              id: 1,
-              text: 'Пушкин'
-            },
-            {
-              id: 2,
-              text: 'Лермонтов'
-            },
-            {
-              id: 3,
-              text: 'Тургенев'
-            },
-            {
-              id: 4,
-              text: 'Некрасов'
-            }
-          ]
-      }
-    ]
+  currentQuestion: 0,
+  questions: [],
+  isError: false,
+  isDataLoading: true,
 };
 
 const reducer = (
@@ -53,9 +19,13 @@ const reducer = (
 ) => {
   switch (type) {
     case IS_DATA_LOADING:
-      return { ...state, isLoading: payload };
+      return { ...state, isDataLoading: payload };
     case SET_CURRENT_QUESTION:
       return { ...state, currentQuestion: payload };
+    case SET_QUESTIONS:
+      return { ...state, questions: payload };
+    case SET_ERROR:
+      return { ...state, isError: true };
     default:
       return state;
   }

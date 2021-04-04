@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Body } from '../src/components/body';
+import { Page } from '../src/components/page';
 import { store } from './config/store';
 import './App.scss';
 
@@ -10,8 +10,9 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <header className="App-header">
+          Quiz app
         </header>
-        <Body />
+        <Page />
       </Provider>
     </div>
   );
