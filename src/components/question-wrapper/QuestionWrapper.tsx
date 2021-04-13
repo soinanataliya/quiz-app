@@ -2,8 +2,9 @@ import React, { FC, memo, useCallback, useState } from "react";
 import s from "./index.module.scss";
 import { QuestionHeader } from "./components/question-header";
 import { Answers } from "./components/answers";
-import { Button } from "./components/button";
+import { Button } from "../button";
 import { IQuestions } from '../../redux/index';
+import { Spinner } from "../spinner";
 
 interface IProps {
   currentQuestion: number;
@@ -43,7 +44,7 @@ const QuestionWrapper: FC<IProps> = ({
     <>
       { isDataLoading
         ?
-        <>is loading</>
+        <Spinner />
         :
         <div className={s.questionField}>
           <QuestionHeader header={currQuestionText} />
