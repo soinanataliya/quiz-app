@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <header className="App-header">
-          Quiz app
+        <div className='cyberText'>Quiz App</div>
         </header>
         <Page />
       </Provider>

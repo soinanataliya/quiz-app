@@ -3,6 +3,9 @@ export interface IRootReducer {
     questions: Array<IQuestions>;
     isError: boolean;
     isDataLoading: boolean;
+    answers: {
+      [key: number]: number;
+    }
 };
 
 export interface ActionType {
@@ -13,9 +16,10 @@ export interface ActionType {
 export interface IQuestions {
   questionText: string,
   answers: Array<IAnswer>;
+  id: number;
 };
 
 export interface IAnswer {
-  id: number,
+  id: number | null,
   text: string | null;
 }

@@ -1,14 +1,12 @@
 import {
-  IS_DATA_LOADING,
-  SET_CURRENT_QUESTION,
-  SET_QUESTIONS,
-  SET_ERROR,
+  Actions,
 } from './actions';
 import { IRootReducer, ActionType } from './types';
 
 export const initialState: IRootReducer = {
   currentQuestion: 0,
   questions: [],
+  answers: {},
   isError: false,
   isDataLoading: true,
 };
@@ -18,14 +16,16 @@ const reducer = (
   { type, payload }: ActionType,
 ) => {
   switch (type) {
-    case IS_DATA_LOADING:
+    case Actions.IS_DATA_LOADING:
       return { ...state, isDataLoading: payload };
-    case SET_CURRENT_QUESTION:
+    case Actions.SET_CURRENT_QUESTION:
       return { ...state, currentQuestion: payload };
-    case SET_QUESTIONS:
+    case Actions.SET_QUESTIONS:
       return { ...state, questions: payload };
-    case SET_ERROR:
+    case Actions.SET_ERROR:
       return { ...state, isError: true };
+    case Actions.SET_ANSWERS:
+      return { ...state, answers: payload };
     default:
       return state;
   }

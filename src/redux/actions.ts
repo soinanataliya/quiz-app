@@ -1,29 +1,41 @@
-import { IQuestions } from ".";
+import { IQuestions } from "./types";
 
-export const IS_DATA_LOADING = 'IS_DATA_LOADING';
+export enum Actions {
+  IS_DATA_LOADING = 'IS_DATA_LOADING',
+  SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION',
+  SET_QUESTIONS = 'SET_QUESTIONS',
+  SET_ERROR = 'SET_ERROR',
+  SET_ANSWERS = 'SET_ANSWERS',
+};
+
 export const isDataLoadingAction = () => ({
-  type: IS_DATA_LOADING,
+  type: Actions.IS_DATA_LOADING,
 });
 
-export const SET_CURRENT_QUESTION = 'SET_CURRENT_QUESTION';
 export const setCurrentQuestionAction = (number: number) => {
   return ({
-    type: SET_CURRENT_QUESTION,
+    type: Actions.SET_CURRENT_QUESTION,
     payload: number,
   })
 };
 
-export const SET_QUESTIONS = 'SET_QUESTIONS';
-export const setQuestions = (questions: Array<IQuestions>) => {
+export const setQuestionsAction = (questions: Array<IQuestions>) => {
   return ({
-    type: SET_QUESTIONS,
+    type: Actions.SET_QUESTIONS,
     payload: questions,
   })
 };
 
-export const SET_ERROR = 'SET_ERROR';
-export const setError = () => {
+export const setErrorAction = () => {
   return ({
-    type: SET_ERROR,
+    type: Actions.SET_ERROR,
+  })
+};
+
+
+export const setAnswersAction = (answer: { [key: number]: number }) => {
+  return ({
+    type: Actions.SET_ANSWERS,
+    payload: answer,
   })
 };

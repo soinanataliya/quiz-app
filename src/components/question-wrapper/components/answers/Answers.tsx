@@ -17,7 +17,7 @@ const Answers: FC<IProps> =
         {
           answers.map(item =>
             <Answer
-              key={item.id}
+              key={Number(item.id)}
               data={item}
               chooseAnswer={chooseAnswer}
               chosen={item.id === chosenAnswer.id}

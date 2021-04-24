@@ -4,6 +4,7 @@ const app = new Koa();
 
 const questions = [
   {
+    id: 1,
     questionText: 'Быть или не быть?',
     answers:
       [
@@ -22,6 +23,7 @@ const questions = [
       ]
   },
   {
+    id: 2,
     questionText: 'Кто автор строк "Белеет парус одинокий...?',
     answers:
       [

@@ -3,8 +3,13 @@ import s from "./index.module.scss";
 import { QuestionHeader } from "./components/question-header";
 import { Answers } from "./components/answers";
 import { Button } from "../button";
-import { IQuestions } from '../../redux/index';
+import { IAnswer, IQuestions, setAnswersAction } from '../../redux/index';
 import { Spinner } from "../spinner";
+
+const DEFAULT_VALUES = {
+  id: null,
+  text: null,
+};
 
 interface IProps {
   currentQuestion: number;
@@ -20,21 +25,21 @@ const QuestionWrapper: FC<IProps> = ({
   setCurrentQuestion,
 }) => {
 
-  const [chosenAnswer, setAnswer] = useState({
-    id: 0,
-    text: null,
-  });
+  const [chosenAnswer, setAnswer] = useState<IAnswer>(DEFAULT_VALUES);
+
+  const [isTestFinished, setIsTestFinished] = useState(false);
 
   const chooseAnswer = useCallback((item) => {
     setAnswer(item);
   }, []);
 
   const answerQuestion = () => {
+    if (questions.length === currentQuestion + 1) {
+      setIsTestFinished(true)
+    }
     setCurrentQuestion(currentQuestion + 1);
-    setAnswer({
-      id: 0,
-      text: null,
-    });
+    setAnswer(DEFAULT_VALUES);
+    setAnswersAction({1: 1});
   }
 
   const currAnswers = questions[currentQuestion]?.answers;
@@ -42,26 +47,28 @@ const QuestionWrapper: FC<IProps> = ({
 
   return (
     <>
-      { isDataLoading
-        ?
-        <Spinner />
-        :
-        <div className={s.questionField}>
-          <QuestionHeader header={currQuestionText} />
-          <Answers
-            answers={currAnswers}
-            chosenAnswer={chosenAnswer}
-            chooseAnswer={chooseAnswer}
-          />
-          <div className={s.questionFieldButton}>
-            <Button
-              text='Ответить'
-              disabled={chosenAnswer.id === null}
-              onClick={answerQuestion}
-            />
-          </div>
-        </div>
-      }
+      {isDataLoading && <Spinner />}
+      <div className={s.questionField}>
+        {!isDataLoading && !isTestFinished &&
+          <>
+            <QuestionHeader header={currQuestionText} />
+            <Answers
+              answers={currAnswers}
+              chosenAnswer={chosenAnswer}
+              chooseAnswer={chooseAnswer} />
+            <div className={s.questionFieldButton}>
+              <Button
+                text='Ответить'
+                disabled={chosenAnswer.id === null}
+                onClick={answerQuestion} />
+            </div></>
+        }        {
+          !isDataLoading && isTestFinished &&
+          <>
+            Тест завершен
+          </>
+        }
+      </div>
     </>
   );
 };
