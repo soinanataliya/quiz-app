@@ -1,14 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Page } from '../src/components/page';
-import { store } from './config/store';
+import configureStore from './config/store';
 import './App.scss';
 
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}>
+      <Provider store={configureStore()}>
         <header className="App-header">
         <div className='cyberText'>Quiz App</div>
         </header>

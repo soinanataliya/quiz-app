@@ -3,8 +3,9 @@ import s from "./index.module.scss";
 import { QuestionHeader } from "./components/question-header";
 import { Answers } from "./components/answers";
 import { Button } from "../button";
-import { IAnswer, IQuestions, setAnswersAction } from '../../redux/index';
+import { IAnswer, IQuestions } from '../../redux/index';
 import { Spinner } from "../spinner";
+import { getToNextQuestion, sendAnswers } from "../../redux/helpers";
 
 const DEFAULT_VALUES = {
   id: null,
@@ -16,6 +17,7 @@ interface IProps {
   questions: Array<IQuestions>;
   isDataLoading: boolean;
   setCurrentQuestion: (number: number) => void;
+  setAnswer: (answer: { [key: number]: number | null }) => void;
 }
 
 const QuestionWrapper: FC<IProps> = ({
@@ -23,6 +25,7 @@ const QuestionWrapper: FC<IProps> = ({
   questions,
   isDataLoading,
   setCurrentQuestion,
+  setAnswer: setAnswerAction,
 }) => {
 
   const [chosenAnswer, setAnswer] = useState<IAnswer>(DEFAULT_VALUES);
@@ -33,13 +36,15 @@ const QuestionWrapper: FC<IProps> = ({
     setAnswer(item);
   }, []);
 
-  const answerQuestion = () => {
+  const answerQuestion = async () => {
     if (questions.length === currentQuestion + 1) {
       setIsTestFinished(true)
+      sendAnswers();
     }
-    setCurrentQuestion(currentQuestion + 1);
+    getToNextQuestion({ [questions[currentQuestion].id]: chosenAnswer.id },
+      currentQuestion);
     setAnswer(DEFAULT_VALUES);
-    setAnswersAction({1: 1});
+
   }
 
   const currAnswers = questions[currentQuestion]?.answers;

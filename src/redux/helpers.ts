@@ -1,29 +1,40 @@
-import { dispatch } from "../config/store"
-import { Actions } from "./actions"
+import { isAnswersSendingAction, setAnswersAction, setCurrentQuestionAction, setDataLoadingAction, setErrorAction, setQuestionsAction, } from "./actions"
 
 export const getQuestions = async () => {
-  dispatch({
-    type: Actions.IS_DATA_LOADING,
-    payload: true,
-  });
-  await fetch('http://localhost:5000/questions').then((resp) => {
+  setDataLoadingAction(true);
+  await fetch('http://localhost:5000/questions', {
+    method: 'GET'
+  }).then((resp) => {
     resp.text().then((result) => {
       const questions = JSON.parse(result);
-      dispatch({
-        type: Actions.SET_QUESTIONS,
-        payload: questions,
-      });
+      setQuestionsAction(questions);
 
     });
   }).catch((error) => {
-    dispatch({
-      type: Actions.SET_ERROR,
-    });
+    setErrorAction();
     console.error(error);
   }).finally(() => {
-    dispatch({
-      type: Actions.IS_DATA_LOADING,
-      payload: false,
-    });
+    setDataLoadingAction(false);
   })
 }
+
+export const sendAnswers = async () => {
+  isAnswersSendingAction(true);
+  await fetch('http://localhost:5000/questions', {
+    method: 'POST'
+  }).then((resp) => {
+    resp.text().then((result) => {
+      console.log(resp)
+    });
+  }).catch((error) => {
+    setErrorAction();
+    console.error(error);
+  }).finally(() => {
+    isAnswersSendingAction(false);
+  })
+}
+
+export const getToNextQuestion = (answer: { [key: number]: number | null }, currQuestion: number) => {
+  setAnswersAction(answer);
+  setCurrentQuestionAction(currQuestion + 1);
+};

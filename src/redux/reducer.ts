@@ -9,6 +9,7 @@ export const initialState: IRootReducer = {
   answers: {},
   isError: false,
   isDataLoading: true,
+  isAnswersSending: false,
 };
 
 const reducer = (
@@ -25,7 +26,9 @@ const reducer = (
     case Actions.SET_ERROR:
       return { ...state, isError: true };
     case Actions.SET_ANSWERS:
-      return { ...state, answers: payload };
+      return { ...state, answers: { ...state.answers, ...payload } };
+    case Actions.IS_ANSWERS_SENDING:
+      return { ...state, isAnswersSending: payload };
     default:
       return state;
   }

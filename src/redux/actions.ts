@@ -1,3 +1,4 @@
+import { dispatch } from "../config/store";
 import { IQuestions } from "./types";
 
 export enum Actions {
@@ -6,36 +7,47 @@ export enum Actions {
   SET_QUESTIONS = 'SET_QUESTIONS',
   SET_ERROR = 'SET_ERROR',
   SET_ANSWERS = 'SET_ANSWERS',
+  IS_ANSWERS_SENDING = 'IS_ANSWERS_SENDING',
 };
 
-export const isDataLoadingAction = () => ({
-  type: Actions.IS_DATA_LOADING,
-});
+export const setDataLoadingAction = (flag: boolean) => {
+  dispatch({
+    type: Actions.IS_DATA_LOADING,
+    payload: flag,
+  });
+}
 
 export const setCurrentQuestionAction = (number: number) => {
-  return ({
+  dispatch({
     type: Actions.SET_CURRENT_QUESTION,
     payload: number,
   })
 };
 
 export const setQuestionsAction = (questions: Array<IQuestions>) => {
-  return ({
+  dispatch({
     type: Actions.SET_QUESTIONS,
     payload: questions,
   })
 };
 
 export const setErrorAction = () => {
-  return ({
+  dispatch({
     type: Actions.SET_ERROR,
   })
 };
 
 
-export const setAnswersAction = (answer: { [key: number]: number }) => {
-  return ({
+export const setAnswersAction = (answer: { [key: number]: number | null }) => {
+  dispatch({
     type: Actions.SET_ANSWERS,
     payload: answer,
+  })
+};
+
+export const isAnswersSendingAction = (flag: boolean) => {
+  dispatch({
+    type: Actions.IS_ANSWERS_SENDING,
+    payload: flag,
   })
 };

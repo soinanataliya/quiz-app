@@ -3,20 +3,24 @@ import thunk from 'redux-thunk';
 import rootReducer from '../redux/index';
 import { initialState } from '../redux/reducer';
 
-const composeEnhancers =
-  typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+let store: any;
 
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk),
-);
+const configureStore = () => {
+  const composeEnhancers =
+    typeof window === 'object' &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-export const store = createStore(
-  rootReducer,
-  initialState,
-  enhancer,
-);
+  const enhancer = composeEnhancers(
+    applyMiddleware(thunk),
+  );
+  store = createStore(
+    rootReducer,
+    initialState,
+    enhancer,
+  );
+  return store;
+}
 
 export const dispatch = (command: AnyAction) => {
   if (!store) {
@@ -25,3 +29,5 @@ export const dispatch = (command: AnyAction) => {
 
   store.dispatch(command);
 }
+
+export default configureStore;

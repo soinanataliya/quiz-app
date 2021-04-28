@@ -3,6 +3,7 @@ export interface IRootReducer {
     questions: Array<IQuestions>;
     isError: boolean;
     isDataLoading: boolean;
+    isAnswersSending: boolean;
     answers: {
       [key: number]: number;
     }
