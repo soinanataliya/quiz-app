@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import s from './index.module.scss';
 import { QuestionWrapper } from '../question-wrapper';
-import { IQuestions, IRootReducer, setCurrentQuestionAction, setAnswersAction } from '../../redux';
+import { IQuestions, IRootReducer, setCurrentQuestionAction, setAnswersAction, IAnswers } from '../../redux';
 import { connect } from 'react-redux';
 import { getQuestions } from '../../redux/helpers';
 
@@ -9,14 +9,16 @@ interface MapStateToProps {
   currentQuestion: number;
   questions: Array<IQuestions>;
   isDataLoading: boolean;
+  answers: IAnswers;
   setCurrentQuestion: (number: number) => void;
-  setAnswer: (answer: { [key: number]: number | null }) => void;
+  setAnswer: (answer: { [key in number]?: number }) => void;
 }
 
 const Page: FC<MapStateToProps> = ({
   currentQuestion,
   questions,
   isDataLoading,
+  answers,
   setCurrentQuestion,
   setAnswer,
 }) => {
@@ -33,6 +35,7 @@ const Page: FC<MapStateToProps> = ({
           currentQuestion={currentQuestion}
           questions={questions}
           isDataLoading={isDataLoading}
+          answers={answers}
           setCurrentQuestion={setCurrentQuestion}
           setAnswer={setAnswer}
         />
@@ -50,6 +53,7 @@ const mapStateToProps = (state: IRootReducer) => {
     questions: state.questions || [],
     currentQuestion: state.currentQuestion || 0,
     isDataLoading: state.isDataLoading || false,
+    answers: state.answers,
   })
 };
 

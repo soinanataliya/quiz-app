@@ -38,7 +38,7 @@ export const setErrorAction = () => {
 };
 
 
-export const setAnswersAction = (answer: { [key: number]: number | null }) => {
+export const setAnswersAction = (answer: { [key in number]?: number }) => {
   dispatch({
     type: Actions.SET_ANSWERS,
     payload: answer,
