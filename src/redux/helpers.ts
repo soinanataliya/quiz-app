@@ -1,8 +1,10 @@
 import { IAnswers } from ".";
-import { isAnswersSendingAction, setAnswersAction, setCurrentQuestionAction, setDataLoadingAction, setErrorAction, setQuestionsAction, } from "./actions"
+import { isAnswersSendingAction, removeErrorAction, setAnswersAction, setCurrentQuestionAction, setDataLoadingAction, setErrorAction, setQuestionsAction, setResult, } from "./actions"
 
 export const getQuestions = async () => {
   setDataLoadingAction(true);
+  setCurrentQuestionAction(0);
+  setAnswersAction({});
   await fetch('http://localhost:5000/questions', {
     method: 'GET'
   }).then((resp) => {
@@ -29,7 +31,8 @@ export const sendAnswers = async (answers: IAnswers) => {
     },
   }).then((resp) => {
     resp.text().then((result) => {
-      console.log(resp)
+      const res = JSON.parse(result);
+      setResult(res.result);
     });
   }).catch((error) => {
     setErrorAction();
@@ -43,3 +46,8 @@ export const getToNextQuestion = (answer: { [key in number]?: number }, currQues
   setAnswersAction(answer);
   setCurrentQuestionAction(currQuestion + 1);
 };
+
+export const resetApp = () => {
+  removeErrorAction();
+  getQuestions();
+}

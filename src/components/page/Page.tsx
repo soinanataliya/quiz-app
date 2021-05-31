@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import s from './index.module.scss';
 import { QuestionWrapper } from '../question-wrapper';
-import { IQuestions, IRootReducer, setCurrentQuestionAction, setAnswersAction, IAnswers } from '../../redux';
+import { IQuestions, IRootReducer, setCurrentQuestionAction, setAnswersAction, IAnswers, ResultType } from '../../redux';
 import { connect } from 'react-redux';
 import { getQuestions } from '../../redux/helpers';
 
@@ -10,6 +10,7 @@ interface MapStateToProps {
   questions: Array<IQuestions>;
   isDataLoading: boolean;
   answers: IAnswers;
+  result: ResultType;
   setCurrentQuestion: (number: number) => void;
   setAnswer: (answer: { [key in number]?: number }) => void;
 }
@@ -19,6 +20,7 @@ const Page: FC<MapStateToProps> = ({
   questions,
   isDataLoading,
   answers,
+  result,
   setCurrentQuestion,
   setAnswer,
 }) => {
@@ -36,6 +38,7 @@ const Page: FC<MapStateToProps> = ({
           questions={questions}
           isDataLoading={isDataLoading}
           answers={answers}
+          result={result}
           setCurrentQuestion={setCurrentQuestion}
           setAnswer={setAnswer}
         />
@@ -54,6 +57,7 @@ const mapStateToProps = (state: IRootReducer) => {
     currentQuestion: state.currentQuestion || 0,
     isDataLoading: state.isDataLoading || false,
     answers: state.answers,
+    result: state.result,
   })
 };
 

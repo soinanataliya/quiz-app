@@ -3,15 +3,16 @@ import s from "./index.module.scss";
 import { QuestionHeader } from "./components/question-header";
 import { Answers } from "./components/answers";
 import { Button } from "../button";
-import { IAnswer, IAnswers, IQuestions } from '../../redux/index';
+import { IAnswer, IAnswers, IQuestions, ResultType } from '../../redux/index';
 import { Spinner } from "../spinner";
-import { getToNextQuestion, sendAnswers } from "../../redux/helpers";
+import { getToNextQuestion, resetApp, sendAnswers } from "../../redux/helpers";
 
 interface IProps {
   currentQuestion: number;
   questions: Array<IQuestions>;
   isDataLoading: boolean;
   answers: IAnswers;
+  result: ResultType;
   setCurrentQuestion: (number: number) => void;
   setAnswer: (answer: IAnswers) => void;
 }
@@ -21,6 +22,7 @@ const QuestionWrapper: FC<IProps> = ({
   questions,
   isDataLoading,
   answers,
+  result,
   setAnswer: setAnswerAction,
 }) => {
 
@@ -36,18 +38,23 @@ const QuestionWrapper: FC<IProps> = ({
     if (!chosenAnswer.id) return
 
     getToNextQuestion(
-      {[questions[currentQuestion].id]: chosenAnswer.id},
+      { [questions[currentQuestion].id]: chosenAnswer.id },
       currentQuestion
     );
 
     if (questions.length === currentQuestion + 1) {
       setIsTestFinished(true);
-      const updatedAnswers = {...answers, [questions[currentQuestion].id]: chosenAnswer.id }
+      const updatedAnswers = { ...answers, [questions[currentQuestion].id]: chosenAnswer.id }
       sendAnswers(updatedAnswers);
     }
 
     setAnswer({});
   }
+
+  const retry = () => {
+    setIsTestFinished(false);
+    resetApp();
+  };
 
   const currAnswers = questions[currentQuestion]?.answers;
   const currQuestionText = questions[currentQuestion]?.questionText;
@@ -69,10 +76,25 @@ const QuestionWrapper: FC<IProps> = ({
                 disabled={!chosenAnswer.id}
                 onClick={answerQuestion} />
             </div></>
-        }        {
+        }
+        {
           !isDataLoading && isTestFinished &&
           <>
-            Тест завершен
+            <div>
+              Тест завершен
+          </div>
+            {result ?
+              <div>Вы успешно прошли тест! Поздравляем!</div> :
+              (
+                <>
+                  <div>К сожалению, вы не справились :(</div>
+                  <div className={s.tryAgainButtonWrapper}>
+                    <Button text='Попробовать еще раз' onClick={retry} />
+                  </div>
+                </>
+              )
+
+            }
           </>
         }
       </div>

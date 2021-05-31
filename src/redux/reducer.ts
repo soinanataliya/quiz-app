@@ -10,6 +10,7 @@ export const initialState: IRootReducer = {
   isError: false,
   isDataLoading: true,
   isAnswersSending: false,
+  result: undefined,
 };
 
 const reducer = (
@@ -25,10 +26,14 @@ const reducer = (
       return { ...state, questions: payload };
     case Actions.SET_ERROR:
       return { ...state, isError: true };
+    case Actions.REMOVE_ERROR:
+      return { ...state, isError: false };
     case Actions.SET_ANSWERS:
       return { ...state, answers: { ...state.answers, ...payload } };
     case Actions.IS_ANSWERS_SENDING:
       return { ...state, isAnswersSending: payload };
+    case Actions.SET_RESULT:
+      return { ...state, result: payload };
     default:
       return state;
   }

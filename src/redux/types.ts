@@ -5,6 +5,7 @@ export interface IRootReducer {
     isDataLoading: boolean;
     isAnswersSending: boolean;
     answers: IAnswers;
+    result: ResultType;
 };
 
 export interface ActionType {
@@ -26,3 +27,5 @@ export interface IAnswer {
 export interface IAnswers {
   [key: number]: number;
 }
+
+export type ResultType = boolean | undefined;
